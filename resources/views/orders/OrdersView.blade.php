@@ -20,7 +20,7 @@
 	<div class="jumbotron">
 		<h1 class="text-center">Orders System</h1>
 	</div>
-	<nav class="navbar navbar-default">
+	<nav class="navbar navbar-default" style="display: none">
 		<div class="container-fluid">
 			<div class="navbar-header col-md-4 col-xs-12 col-sm-6 col-lg-4">
 				<a data-toggle="modal" data-target=".sort-modal-lg1" class="navbar-brand" href="#">类目<span class="caret"></span></a>
@@ -33,6 +33,7 @@
 			</div>
 		</div>
 	</nav>
+	<hr style="margin-top: 0px">
 	<div class="row">
 		<button type="btn" class="btn btn-primary" id="search">搜索</button>
 		<button type="btn" class="btn btn-default" id="update">更新数据</button>  <span id="latestupdate">最近的一次数据更新：</span>
