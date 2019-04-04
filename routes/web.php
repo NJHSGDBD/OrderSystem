@@ -17,6 +17,9 @@ Route::get('/', function () {
 Route::get('OS',function(){
 	return view('orders.OrdersView');
 });
+Route::get('OS/instruction',function(){
+	return view('orders.InsView');
+});
 Route::any('/test','RequestController@view');
 Route::any('/request','RequestController@showRequest');
 Route::get('mysql','MysqlController@index');
