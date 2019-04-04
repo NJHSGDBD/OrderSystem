@@ -66,7 +66,7 @@ public function read($date1="0",$date2="0"){
                 $order = json_decode($order_json,true);
                 $product = json_decode($product_json,true);
 
-                $manufacturers_name = $this->getManufacturers($product['products_id']);
+                $manufacturers_name = $this->getManufacturers($product['manufacturers_id']);
 
                 $manufacturers = array('manufactruers' => $manufacturers_name['manufacturers_name']);
                 $subtotal = array('orders_subtotal' => $orders_subtotal['value']);
@@ -109,6 +109,8 @@ public function setOrdersProducts($orders_id){
     localOrdersProducts::where('orders_id',$orders_id)->delete();
 
     foreach ($orders_products as $orders_product) {
+        $manufacturers_id_json = Products::select('manufacturers_id')->find($orders_product['products_id']);
+        $manufacturers_id = json_decode($manufacturers_id_json,true);
         $localOrdersProducts = new localOrdersProducts;
         $localOrdersProducts->orders_products_id = $orders_product['orders_products_id'];
         $localOrdersProducts->orders_id = $orders_product['orders_id'];
@@ -117,6 +119,7 @@ public function setOrdersProducts($orders_id){
         $localOrdersProducts->products_name = $orders_product['products_name'];
         $localOrdersProducts->products_price = $orders_product['products_price'];
         $localOrdersProducts->products_quantity = $orders_product['products_quantity'];
+        $localOrdersProducts->manufacturers_id = $manufacturers_id['manufacturers_id'];
         $localOrdersProducts->save();
     }
 }
@@ -138,10 +141,8 @@ public function setOrdersTotal($orders_id){
 
 }
 //获取厂家名称
-public function getManufacturers($products_id){
-    $manufacturers_id_json = Products::select('manufacturers_id')->find($products_id);
-    $manufacturers_id = json_decode($manufacturers_id_json,true);
-    $manufactruers = localManufacturers::select('manufacturers_name')->find($manufacturers_id['manufacturers_id']);
+public function getManufacturers($manufacturers_id){
+    $manufactruers = localManufacturers::select('manufacturers_name')->find($manufacturers_id);
     return json_decode($manufactruers,true);
 }
 //获取最新的更新日期
