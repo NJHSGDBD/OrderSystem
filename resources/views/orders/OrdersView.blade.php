@@ -144,6 +144,12 @@
 			})
 			return date;
 		}
+		function doafterSearch(res="null"){
+			$(".search").show();
+			$("#search").removeAttr("disabled");
+			$("#search").text("搜索")
+			$("#result_table").bootstrapTable('load',res);
+		}
 
 		$(document).ready(function(){
 			$(".search").hide();
@@ -164,10 +170,7 @@
 					data: '',
 					dataType: 'json',
 					success: function(res){
-						$(".search").show();
-						$("#search").removeAttr("disabled");
-						$("#search").text("搜索")
-						$("#result_table").bootstrapTable('load',res);
+						doafterSearch(res);
 					}
 				})
 			}else if($("#check1").is(':checked') && !$("#check2").is(':checked')){
@@ -177,10 +180,7 @@
 					data: '',
 					dataType: 'json',
 					success: function(res){
-						$(".search").show();
-						$("#search").removeAttr("disabled");
-						$("#search").text("搜索")
-						$("#result_table").bootstrapTable('load',res);
+						doafterSearch(res);
 					}
 				})
 			}else if(!$("#check1").is(':checked') && $("#check2").is(':checked')){
@@ -190,12 +190,12 @@
 					data: '',
 					dataType: 'json',
 					success: function(res){
-						$(".search").show();
-						$("#search").removeAttr("disabled");
-						$("#search").text("搜索")
-						$("#result_table").bootstrapTable('load',res);
+						doafterSearch(res);
 					}
 				})
+			}else{
+				alert("选勾选要查找的时间(段)")
+				doafterSearch()
 			}
 		})
 		$("#update").click(function(){
