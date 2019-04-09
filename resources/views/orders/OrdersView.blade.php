@@ -145,7 +145,9 @@
 			return date;
 		}
 		function doafterSearch(res="null"){
-			$(".search").show();
+			if(res != "null"){
+				$(".search").show();
+			}
 			$("#search").removeAttr("disabled");
 			$("#search").text("搜索")
 			$("#result_table").bootstrapTable('load',res);
