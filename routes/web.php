@@ -34,3 +34,5 @@ Route::get('orders/readProducts','OrdersController@readProducts');
 Route::get('orders/test/{products_id}','OrdersController@setManufacturers');
 Route::get('orders/getLatestUpdate','OrdersController@getLatestUpdate');
 Route::get('orders/setCate','OrdersController@setCate');
+
+Route::get('/sendmail','MailController@mail');
