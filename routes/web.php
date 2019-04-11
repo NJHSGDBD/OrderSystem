@@ -36,3 +36,10 @@ Route::get('orders/getLatestUpdate','OrdersController@getLatestUpdate');
 Route::get('orders/setCate','OrdersController@setCate');
 
 Route::get('/sendmail','MailController@mail');
+
+Route::get('/Taobao/updateAll','Taobao\TaobaoPicController@setAll');
+Route::get('/Taobao/setPic','Taobao\TaobaoPicController@setPic');
+
+Route::get('taobao',function(){
+	return view('taobao.TabPicView');
+});
