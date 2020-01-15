@@ -313,6 +313,20 @@
 				field: 'products_name',
 				title: '产品名'
 			},{
+				field: 'products_fits',
+				title: '适配车型',
+	            cellStyle: function (value, row, index) {
+	                return {
+	                    css: {
+	                        "min-width": "100px",
+	                        "white-space": "nowrap",
+	                        "text-overflow": "ellipsis",
+	                        "overflow": "hidden",
+	                        "max-width": "200px"
+	                    }
+	                }
+	            },
+			},{
 				field: 'products_price',
 				title: '产品单价'
 			},{

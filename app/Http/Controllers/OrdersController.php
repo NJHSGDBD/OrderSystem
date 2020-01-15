@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Orders as Orders;
 use App\Products as Products;
+use App\webike_meta_tags_products_description as ProductsFits;
 use App\localOrders as localOrders;
 use App\localOrdersProducts as localOrdersProducts;
 use App\localOrdersTotal as localOrdersTotal;
@@ -19,7 +20,7 @@ class OrdersController extends Controller
         ini_set('max_execution_time', 0);
         ini_set("memory_limit", 1048576000);
 
-        $orders_json = Orders::where([['date_purchased','>',$date1],['date_purchased','<=',$date2]])->select('orders_id','date_purchased','orders_status','customers_id','customers_name','customers_email_address','customers_state','customers_country','delivery_state','delivery_country','shipping_method','category_id')->get();
+        $orders_json = Orders::where([['date_purchased','>',$date1],['date_purchased','<=',$date2]])->select('orders_id','date_purchased','orders_status','customers_id','customers_name','customers_email_address','customers_state','customers_country','delivery_state','delivery_country','shipping_method','category_id','products_fits')->get();
 
         if($orders_json == "[]"){
             return "没有最新的数据";
@@ -158,6 +159,13 @@ public function update_cat_id(){
     $products = Products::select('products_id','master_categories_id')->whereIn('products_id',$products_ids)->get()->toArray();
     foreach ($products as $key => $product) {
         localOrdersProducts::where('products_id',$product['products_id'])->update(['category_id'=>$product['master_categories_id']]);
+    }
+}
+public function update_product_fit(){
+    $products_ids = localOrdersProducts::select('products_id')->groupby('products_id')->limit(10)->get()->pluck('products_id')->toArray();
+    $products_fits = ProductsFits::select('products_id','metatags_description')->whereIn('products_id',$products_ids)->get()->toArray();
+    foreach ($products_fits as $key => $product) {
+        localOrdersProducts::where('products_id',$product['products_id'])->update(['products_fits'=>$product['metatags_description']]);
     }
 }
 }
