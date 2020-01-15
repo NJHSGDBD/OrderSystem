@@ -10,17 +10,23 @@ use App\Model\Taobao\AllPic as AllPic;
 
 class TaobaoPicController extends Controller
 {
-	public function setAll(){
-		$allValues = json_decode(file_get_contents("http://localhost/selenium-test/test1.php"),true);
+	public function setAll(Request $request){
+		$cookie2 = $request->input('cookie2');
+		$allValues = json_decode(file_get_contents("http://localhost/selenium-test/test1.php?cookie2=".$cookie2),true);
 		$values = $allValues['module']['dirs']['children'];
-		foreach($values as $value){
-			if(!AllPic::find($value['id'])){
-				$AllPic = new AllPic;
-				$AllPic->name = $value['name'];
-				$AllPic->id = $value['id'];
-				$AllPic->status = "0";
-				$AllPic->save();
+		if($values){
+			foreach($values as $value){
+				if(!AllPic::find($value['id'])){
+					$AllPic = new AllPic;
+					$AllPic->name = $value['name'];
+					$AllPic->id = $value['id'];
+					$AllPic->status = "0";
+					$AllPic->save();
+				}
 			}
+			echo "已更新目录信息";
+		}else{
+			echo '未连接到淘宝，检查selenium配置';
 		}
 	}
 
@@ -56,28 +62,4 @@ class TaobaoPicController extends Controller
 		}
 
 	}
-	// public function setInfoPic(){
-	// 	$values = AllPic::select('id')->get();
-	// 	foreach($values as $id){
-	// 		$values = json_decode(file_get_contents("http://localhost/selenium-test/test2.php?cat_id=".$id['id']),true);
-	// 		$pics = $values['module']['file_module'];
-	// 		echo $id['id']."<br>";
-	// 		if($pics){
-	// 			foreach($pics as $pic){
-	// 				if(substr($pic['pixel'], 0, 3) == '750'){
-	// 					echo $pic['name'];
-	// 					echo "<br>";
-	// 					echo $pic['fullUrl'];
-	// 					echo "<br>";
-	// 					echo $pic['pixel'];
-	// 					echo "<br>";
-	// 					echo "--------------------";
-	// 					echo "<br>";
-	// 				}
-	// 			}
-	// 		}else{
-	// 			echo "<br>----------------<br>";
-	// 		}
-	// 	}
-	// }
 }

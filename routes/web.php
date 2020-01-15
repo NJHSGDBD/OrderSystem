@@ -43,3 +43,4 @@ Route::get('/Taobao/setPic','Taobao\TaobaoPicController@setPic');
 Route::get('taobao',function(){
 	return view('taobao.TabPicView');
 });
+Route::get('/update_cat_id','OrdersController@update_cat_id');

@@ -19,7 +19,7 @@ class OrdersController extends Controller
         ini_set('max_execution_time', 0);
         ini_set("memory_limit", 1048576000);
 
-        $orders_json = Orders::where([['date_purchased','>',$date1],['date_purchased','<=',$date2]])->select('orders_id','date_purchased','orders_status','customers_id','customers_name','customers_email_address','customers_state','customers_country','delivery_state','delivery_country','shipping_method')->get();
+        $orders_json = Orders::where([['date_purchased','>',$date1],['date_purchased','<=',$date2]])->select('orders_id','date_purchased','orders_status','customers_id','customers_name','customers_email_address','customers_state','customers_country','delivery_state','delivery_country','shipping_method','category_id')->get();
 
         if($orders_json == "[]"){
             return "没有最新的数据";
@@ -152,5 +152,12 @@ public function getLatestUpdate(){
 }
 public function setCate(Request $request){
     localOrdersProducts::where('orders_id',147582)->delete();
+}
+public function update_cat_id(){
+    $products_ids = localOrdersProducts::select('products_id')->groupby('products_id')->get()->pluck('products_id')->toArray();
+    $products = Products::select('products_id','master_categories_id')->whereIn('products_id',$products_ids)->get()->toArray();
+    foreach ($products as $key => $product) {
+        localOrdersProducts::where('products_id',$product['products_id'])->update(['category_id'=>$product['master_categories_id']]);
+    }
 }
 }

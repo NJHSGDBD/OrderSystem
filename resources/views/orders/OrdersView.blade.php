@@ -39,18 +39,18 @@
 		<button type="btn" class="btn btn-default" id="update">更新数据</button>  <span id="latestupdate">最近的一次数据更新：</span>
 		<div class="col-lg-3 date1">
 			<div class="input-group">
-				<span class="input-group-addon">
+				<label class="input-group-addon" for="check1">
 					<input id="check1" type="checkbox" aria-lable="...">
-				</span>
+				</label>
 				<input id="date1" type="text" class="form-control" aria-lable='...' value="" autocomplete="off">
 			</div>	
 		</div>
 		<div class="col-lg-1 icon"><h5 class="text-center">—</h5></div>
 		<div class="col-lg-3 date2">
 			<div class="input-group">
-				<span class="input-group-addon">
+				<label class="input-group-addon" for="check2">
 					<input id="check2" type="checkbox" aria-lable="...">
-				</span>
+				</label>
 				<input id="date2" type="text" class="form-control" aria-lable='...' autocomplete="off">
 			</div>
 		</div>
@@ -257,6 +257,7 @@
 			showRefresh: false,
 			showColumns: true,
 			buttonsAlign: 'center',
+			clickToSelect: true,
 			// detailView : true,
 			columns:[
 			{
@@ -303,6 +304,9 @@
 				field:'products_id',
 				title: '产品ID'
 			},{
+				field:'category_id',
+				title: '产品类目ID'
+			},{
 				field: 'products_model',
 				title: '产品型号'
 			},{
@@ -346,7 +350,7 @@
 		    },
 		    showExport : true,
 		    exportDataType : 'all',
-		    exportTypes:['json','txt','sql','excel','xlsx'],
+		    exportTypes:['json','txt','sql','excel','xlsx','csv'],
 		    exportOptions : {
 		    	fileName : '订单数据导出',
 		    	worksheetName : 'Sheet1',
